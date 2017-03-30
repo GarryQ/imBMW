@@ -21,6 +21,11 @@ namespace imBMW.iBus.Devices.Real
 
     public static class LightControlModule
     {
+        #region Messages
+        public static Message MessageSendDiag = new Message(DeviceAddress.Diagnostic, DeviceAddress.LightControlModule, 0x02, 0x02);
+        public static Message MessageParkLightsOn = new Message(DeviceAddress.Diagnostic, DeviceAddress.LightControlModule, 0x0C, 0x00, 0x00, 0xFF, 0xFF, 0x06, 0x49, 0x08, 0x80, 0x00, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00);
+        #endregion
+
         static LightControlModule()
         {
             Manager.AddMessageReceiverForSourceDevice(DeviceAddress.LightControlModule, ProcessLCMMessage);
@@ -120,7 +125,14 @@ namespace imBMW.iBus.Devices.Real
                 e(m, args);
             }
         }
-
+        
         public static event LightStatusEventHandler LightStatusReceived;
+        
+        //public static void ParkLightsOn()
+        //{
+          //  Manager.EnqueueMessage(MessageSendDiag, MessageParkLightsOn);
+            
+            
+        //}
     }
 }

@@ -13,7 +13,8 @@ namespace imBMW.Features
         enum Command
         {
             FullCloseWindows,
-            FullOpenWindows
+            FullOpenWindows,
+            WelcomeLightsOn
         }
         #endregion
 
@@ -81,6 +82,11 @@ namespace imBMW.Features
                 }
                 if (e.Button == RemoteKeyButton.Unlock)
                 {
+                    {
+                        //LightControlModule.ParkLightsOn();
+
+                        commands.Enqueue(Command.WelcomeLightsOn);
+                    }
                     if (AutoUnfoldMirrors)
                     {
                         BodyModule.UnfoldMirrors();
@@ -105,7 +111,7 @@ namespace imBMW.Features
                         Manager.EnqueueMessage(BodyModule.MessageCloseWindowDriverRear);
                         Thread.Sleep(750);
                         Manager.EnqueueMessage(BodyModule.MessageCloseWindowPassengerRear);
-                        Thread.Sleep(750);
+                        Thread.Sleep(750); 
                     }
                     break;
                 case Command.FullOpenWindows:
@@ -119,6 +125,19 @@ namespace imBMW.Features
                         Thread.Sleep(750);
                         Manager.EnqueueMessage(BodyModule.MessageOpenWindowPassengerRear);
                         Thread.Sleep(750);
+                    }
+                    break;
+                case Command.WelcomeLightsOn:
+                   
+                    {
+                        Manager.EnqueueMessage(LightControlModule.MessageSendDiag);
+                        Thread.Sleep(500);
+                        Manager.EnqueueMessage(LightControlModule.MessageParkLightsOn);
+                        Thread.Sleep(12000);
+                        Manager.EnqueueMessage(LightControlModule.MessageParkLightsOn);
+                        Thread.Sleep(12000);
+                        Manager.EnqueueMessage(LightControlModule.MessageParkLightsOn);
+                        Thread.Sleep(12000);
                     }
                     break;
             }
