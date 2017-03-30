@@ -248,7 +248,7 @@ namespace imBMW.Devices.V2
                 Logger.Info("Radio menu inited" + (Radio.HasMID ? " with MID" : ""));
             }
 
-            ShieldLED = new OutputPort(Pin.Di10, false);
+            ShieldLED = new OutputPort(Pin.Di16, false);
             player.IsPlayingChanged += (p, s) =>
             {
                 ShieldLED.Write(s);
